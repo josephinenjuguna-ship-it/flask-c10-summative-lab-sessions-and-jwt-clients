@@ -121,6 +121,21 @@ def get_tasks():
         "current_page": pagination.page
     }, 200
 
+@app.route("/me", methods=["GET"])
+@jwt_required()
+def me():
+    user_id = get_jwt_identity()
+
+    user = db.session.get(User, int(user_id))
+
+    if not user:
+        return {"errors": ["User not found"]}, 404
+
+    return {
+        "id": user.id,
+        "username": user.username
+    }, 200
+
 
 @app.route("/tasks", methods=["POST"])
 @jwt_required()
