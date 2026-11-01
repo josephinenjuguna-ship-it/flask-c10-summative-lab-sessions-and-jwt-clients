@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import Login from "../pages/Login";
+import TaskList from "./TaskList";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -20,15 +21,18 @@ function App() {
   const onLogin = (token, user) => {
     localStorage.setItem("token", token);
     setUser(user);
-  }
+  };
 
-  if (!user) return <Login onLogin={onLogin} />;
+  if (!user) {
+    return <Login onLogin={onLogin} />;
+  }
 
   return (
     <>
       <NavBar setUser={setUser} />
+
       <main>
-        <p>You are logged in!</p>
+        <TaskList />
       </main>
     </>
   );
